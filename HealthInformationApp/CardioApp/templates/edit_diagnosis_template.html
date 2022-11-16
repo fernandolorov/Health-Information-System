@@ -1,0 +1,33 @@
+{% extends 'base_template.html' %}
+
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a href="{% url 'homepage' %}">Home</a>
+	<a href="{% url 'patient_list' %}">Patients</a>
+	<a class="active" href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a href="{% url 'investigation_list' %}">Investigations</a>
+	<a href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+
+<h2><b>Edit diagnosis:</b></h2>
+
+<div class="form-group" id="new_element_form">
+<form id="diagnosis_form" id="save_form" enctype="multipart/form-data" method="POST" action="">{% csrf_token %}
+	{{ diagnosis_form }}
+	<input type="submit" class="btn btn-success" value="Save Data"></input>
+</form>
+</div>
+
+<form method="get" id="cancel_form" action="{% url 'diagnosis_list' %}">
+	<input type="submit" class="btn btn-secondary" value="Cancel">
+</form>
+
+{% endblock %}

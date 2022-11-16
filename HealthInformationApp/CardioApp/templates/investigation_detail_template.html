@@ -1,0 +1,53 @@
+{% extends 'base_template.html' %}
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a href="{% url 'homepage' %}">Home</a>
+	<a href="{% url 'patient_list' %}">Patients</a>
+	<a href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a class="active" href="{% url 'investigation_list' %}">Investigations</a>
+	<a href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+	
+<div id="lists">
+<table  class="table table-hover">
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Temperature</th>
+		<th>Heart Rate</th>
+		<th>Symptoms</th>
+		<th>Experienced Before</th>
+	</tr>
+	</thead>
+	<tr>
+		<td>{{ investigation.patient }}</td>
+		<td>{{ investigation.temperature }}</td>
+		<td>{{ investigation.heart_rate }}</td>
+		<td>{{ investigation.symptoms }}</td>
+		<td>{{ investigation.experienced_before }}</td>
+	</tr>
+</table>
+</div>
+
+<form method="get" id="back_form" action="{% url 'investigation_list' %}">
+	<input type="submit" class="btn btn-secondary" value="Back">
+</form>
+
+<form method="get" id="edit_form" action="{% url 'edit_investigation' investigation.id %}"">
+	<input type="submit" class="btn btn-primary" name="edit" value="Edit investigation"></input>
+</form>
+
+<form method="post" id="delete_form">{% csrf_token %}
+	<input type="submit" class="btn btn-danger" name="delete" onclick="return confirm('Are you sure?');" value="Delete"></input>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'base_template.html' %}
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a href="{% url 'homepage' %}">Home</a>
+	<a class="active" href="{% url 'patient_list' %}">Patients</a>
+	<a href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a href="{% url 'investigation_list' %}">Investigations</a>
+	<a href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+
+<h2><p>Patient details:</p></h2>
+
+	<!-- Display the required field -->
+	<div id="lists">
+	<table  class="table table-hover">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>Gender</th>
+			<th>Birth Date</th>
+			<th>Nationality</th>
+			<th>Email</th>
+			<th>Visit Date</th>
+		</tr>
+		</thead>
+		<tr>
+			<td>{{ patient.name }} {% if patient.middle_name is not None %} {{ patient.middle_name }} {% endif %} {{ patient.last_name }}</td>
+			<td>{{ patient.gender }}</td>
+			<td>{{ patient.birth_date }}</td>
+			<td>{{ patient.nationality }}</td>
+			<td>{{ patient.email }}</td>
+			<td>{{ patient.visit_date }}</td>
+		</tr>
+
+	</table>
+	</div>
+
+	<h2><p>Patient diagnosis:</p></h2>
+
+	{% if diagnosis_list %}
+	<div id="lists">
+	<table  class="table table-hover">
+		<thead>
+		<tr>	
+			<th>Diagnosis ID</th>
+			<th>Diagnosis Date</th>
+		</tr>
+		</thead>
+		{% for elements in diagnosis_list %}
+		<tr>
+			<td><a href="{% url 'diagnosis_detail' elements.id %}">{{ elements.id }}</a></td>
+			<td>{{ elements.diagnosis_date }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+
+	
+	
+	{% else %}
+	<!-- Display: no records exist message -->
+	<p>There are not diagnosis for this patient.</p>
+	{% endif %}
+
+	<h2><p>Patient investigations:</p></h2>
+
+	{% if investigations_list %}
+	<!-- Display the required field -->
+	<div id="lists">
+	<table  class="table table-hover">
+		<thead>
+		<tr>
+			<th>Temperature</th>
+			<th>Heart Rate</th>
+			<th>Symptoms</th>
+			<th>Experienced Before</th>
+		</tr>
+		</thead>
+	{% for elements in investigations_list %}
+		<tr>
+			<td>{{ elements.temperature }}</td>
+			<td>{{ elements.heart_rate }}</td>
+			<td>{{ elements.symptoms }}</td>
+			<td>{{ elements.experienced_before }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+	</div>
+	{% else %}
+	<!-- Display: no records exist message -->
+	<p>There are not investigations for this patient.</p>
+	{% endif %}
+
+
+	<h2><p>Cardiograms:</p></h2>
+
+	{% if cardiogram_list %}
+	<div id="lists">
+	<table class="table table-hover">
+		<thead>
+		<tr>
+		<th>ID</th>	
+		<th>Patient Name</th>
+		<th>Cardiogram</th>
+		</tr>
+		</thead>
+	{% for elements in cardiogram_list %}
+		<tr>
+			<td><a href="{% url 'cardiogram_detail' elements.id %}">{{ elements.id }}</a></td>
+			<td>{{ elements.patient }}</td>
+			<td>{{ elements.cardiogram }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+	</div>
+	{% else %}
+	<!-- Display: no records exist message -->
+	<p>There are not cardiogeams for this patient.</p>
+	{% endif %}
+
+<form method="get" id="back_form" action="{% url 'patient_list' %}">
+	<input type="submit"  class="btn btn-secondary" value="Back">
+</form>
+
+<form method="get" id="edit_form" action="{% url 'edit_patient' patient.id %}">
+	<input type="submit" class="btn btn-primary" name="edit" value="Edit Patient"></input>
+	
+</form>
+
+<form method="post"  id="delete_form">{% csrf_token %}
+	<input type="submit" class="btn btn-danger" name="delete" onclick="return confirm('Are you sure?');" value="Delete"></input>
+</form>
+
+{% endblock %}

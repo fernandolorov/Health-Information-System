@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+    <title>Login Page</title>
+    
+	<!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+    {% block content %}
+
+    <!-- Tabs Titles -->
+    <div>
+        <p id="body_title"><h2>Health Information System</h2></p>
+    </div>
+
+
+     
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div id="login_error_message">
+            <!-- Error Messages -->
+            {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+
+            {% if next %}
+                {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+                {% else %}
+                <p>Please login to see this page.</p>
+                {% endif %}
+            {% endif %}
+            </div>
+          <!-- Login Form -->
+          <form method="post" action="{% url 'login' %}">{% csrf_token %}
+            <table>
+                <tr>
+                    <td id="username" class="fadeIn second" name="login" placeholder="login">{{ form.username.label_tag }} {{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td id="password" class="fadeIn third" name="login" placeholder="password">{{ form.password.label_tag }} {{ form.password }}</td>
+                </tr>
+            </table>
+
+            <input type="submit"  class="fadeIn fourth" value="Log in">
+            <input type="hidden" name="next" value="{{ next }}">
+          </form>
+      
+          <!-- Remind Passowrd -->
+          <div id="formFooter">
+            {# Assumes you setup the password_reset view in your URLconf #}
+            <p><a class="underlineHover" href="{% url 'password_reset' %}">Forgot password?</a></p>
+          </div>
+      
+        </div>
+      </div>
+
+
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+{% extends 'base_template.html' %}
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a href="{% url 'homepage' %}">Home</a>
+	<a href="{% url 'patient_list' %}">Patients</a>
+	<a href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a href="{% url 'investigation_list' %}">Investigations</a>
+	<a class="active" href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+
+<h2><b>Cardiograms:</b></h2>
+{% if cardiogram_list %}
+	<!-- Display the required field -->
+	<p>Number of cardiogram: {{ cardiogram_number }}</p>
+  	<div id="lists">
+	<table class="table table-hover">
+		<thead>
+		<tr>
+		<th>ID</th>	
+		<th>Patient Name</th>
+		<th>Cardiogram</th>
+		</tr>
+		</thead>
+	{% for elements in paginator %}
+		<tr>
+			<td><a href="{% url 'cardiogram_detail' elements.id %}">{{ elements.id }}</a></td>
+			<td>{{ elements.patient }}</td>
+			<td>{{ elements.cardiogram }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+
+	
+	{% if paginator.has_other_pages %}
+
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+		{% if paginator.has_previous %}
+			<li class="page-item"><a class="page-link" href="?page={{ pagination.previous_page_number }}">Previous</a></li>
+		{% else %}
+			<li class="page-item disabled"><span class="page-link">Previous</span></li>
+		{% endif %}
+		
+		{% for i in paginator.paginator.page_range %}
+			{% if pagination.number == i %}
+				<li class="page-item active"><span class="page-link">
+					{{ i }} 
+					<span class="sr-only">(current)</span>
+				</span></li>
+			{% else %}
+				<li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+			{% endif %}
+		{% endfor %}
+
+		{% if paginator.has_next %}
+			<li class="page-item"><a class="page-link" href="?page={{ paginator.next_page_number }}">Next</a></li>
+		{% else %}
+			<li class="page-item disabled"><spa class="page-link">Next</span></li>
+		{% endif %}
+		</ul>
+	</nav>
+
+	{% endif %}
+
+</div>
+	
+{% else %}
+<!-- Display: no records exist message -->
+<p>There are not cardiograms registered in the system</p>
+{% endif %}
+
+
+<form method="get" action="{% url 'newcardiogram' %}">
+	<input type="submit" class="btn btn-primary" value="Add new cardiogram">
+</form>
+
+
+{% endblock %}

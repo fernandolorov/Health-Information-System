@@ -1,0 +1,61 @@
+{% extends 'base_template.html' %}
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a href="{% url 'homepage' %}">Home</a>
+	<a href="{% url 'patient_list' %}">Patients</a>
+	<a class="active" href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a href="{% url 'investigation_list' %}">Investigations</a>
+	<a href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+
+<div id="lists">
+<table  class="table table-hover">
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Diagnosis</th>
+		<th>Aditional Comments</th>
+		<th>Diagnosis Date</th>
+	</tr>
+
+	<tr>
+		<td>{{ diagnosis.patient }}</td>
+		<td>{{ diagnosis.diagnosis }}</td>
+		<td>{{ diagnosis.aditional_comments }}</td>
+		<td>{{ diagnosis.diagnosis_date }}</td>
+	</tr>
+	</thead>
+</table>
+</div>
+{% if images %}
+<h3><b>Images:</b></h3>
+	{% for image in images %}
+	<br><br>
+	<img src='{{ MEDIA_URL }}{{ image.image }}'>
+	<br><br>
+	</p>
+	{% endfor %}
+
+{% endif %}
+
+<form method="get" id="back_form" action="{% url 'diagnosis_list' %}">
+	<input type="submit"  class="btn btn-secondary" value="Back">
+</form>
+
+<form method="get" id="edit_form" action="{% url 'edit_diagnosis' diagnosis.id %}"">
+	<input type="submit" class="btn btn-primary" name="edit" value="Edit diagnosis"></input>
+</form>
+
+<form method="post"  id="delete_form">{% csrf_token %}
+	<input type="submit" class="btn btn-danger" name="delete" onclick="return confirm('Are you sure?');" value="Delete"></input>
+</form>
+
+{% endblock %}

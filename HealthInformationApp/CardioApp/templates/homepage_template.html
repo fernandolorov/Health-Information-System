@@ -1,0 +1,28 @@
+{% extends 'base_template.html' %}
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a class="active" href="{% url 'homepage' %}">Home</a>
+	<a href="{% url 'patient_list' %}">Patients</a>
+	<a href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a href="{% url 'investigation_list' %}">Investigations</a>
+	<a href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+
+
+
+<h2><b>Home Page</b></h2>
+<p>Number of patients, diagnosis, investigations and cardiograms:</p>
+<p class ="patients" >Patients: {{ patients_number }}</p>
+<p>Diagnosis: {{ diagnosis_number }}</p>
+<p>Investigations: {{ investigation_number }}</p>
+<p>Cardiograms: {{ cardiogram_number }}</p>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base_template.html' %}
+
+{% block sidebar %}
+<!-- default navigation text for every page -->
+
+<div class="sidebar">
+	<a href="{% url 'homepage' %}">Home</a>
+	<a href="{% url 'patient_list' %}">Patients</a>
+	<a href="{% url 'diagnosis_list' %}">Diagnosis</a>
+	<a href="{% url 'investigation_list' %}">Investigations</a>
+	<a class="active" href="{% url 'cardiogram_list' %}">Cardiograms</a>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+<!-- default content text -->
+
+<div id="lists">
+<table  class="table table-hover">
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Cardiogram file</th>
+	</tr>
+
+	<tr>
+		<td>{{ cardiogram.patient }}</td>
+		<td>{{ cardiogram.cardiogram }}</td>
+	</tr>
+
+	</thead>
+</table>
+</div>
+
+<div style="width:82%">
+	{{ graph_div|safe }}
+</div>
+
+{% if heartrate %}
+<div style="width:82%;  text-align: center">
+	<b>Heart rate:</b> {{ heartrate }}
+</div>
+{% endif %}
+
+
+
+<form method="get" id="back_form" action="{% url 'cardiogram_list' %}">
+	<input type="submit"  class="btn btn-secondary" value="Back">
+</form>
+
+<form method="post" id="filter_form" action="{% url 'cardiogram_detail'  cardiogram.id %}">{% csrf_token %}
+	<input type="submit"  class="btn btn-warning" name="filter" value="Filter">
+</form>
+
+<form method="post" id="find_points_form" action="{% url 'cardiogram_detail'  cardiogram.id %}">{% csrf_token %}
+	<input type="submit"  class="btn btn-warning" name="find_points" value="Find QRS Points">
+</form>
+
+
+<form method="get" id="edit_form" action="{% url 'edit_cardiogram' cardiogram.id %}"">
+	<input type="submit" class="btn btn-primary" name="edit" value="Edit cardiogram"></input>
+</form>
+
+<form method="post"  id="delete_form">{% csrf_token %}
+	<input type="submit" class="btn btn-danger" name="delete" onclick="return confirm('Are you sure?');" value="Delete"></input>
+</form>
+
+{% endblock %}

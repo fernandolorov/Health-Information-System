@@ -1,0 +1,41 @@
+{% extends 'base_template.html' %}
+
+
+{% block content %}
+<!-- default content text -->
+
+<div id="lists">
+<table  class="table table-hover">
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Diagnosis</th>
+		<th>Aditional Comments</th>
+		<th>Diagnosis Date</th>
+	</tr>
+
+	<tr>
+		<td>{{ diagnosis.patient }}</td>
+		<td>{{ diagnosis.diagnosis }}</td>
+		<td>{{ diagnosis.aditional_comments }}</td>
+		<td>{{ diagnosis.diagnosis_date }}</td>
+	</tr>
+	</thead>
+</table>
+</div>
+{% if images %}
+<h3><b>Images:</b></h3>
+	{% for image in images %}
+	<br><br>
+	<img src='{{ MEDIA_URL }}{{ image.image }}'>
+	<br><br>
+	</p>
+	{% endfor %}
+
+{% endif %}
+
+<form method="get" id="back_form" action="{% url 'homepage' %}">
+	<input type="submit"  class="btn btn-secondary" value="Back">
+</form>
+
+{% endblock %}

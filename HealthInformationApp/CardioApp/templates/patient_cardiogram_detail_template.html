@@ -1,0 +1,39 @@
+{% extends 'base_template.html' %}
+
+
+{% block content %}
+<!-- default content text -->
+
+<div id="lists">
+<table  class="table table-hover">
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Cardiogram file</th>
+	</tr>
+
+	<tr>
+		<td>{{ cardiogram.patient }}</td>
+		<td>{{ cardiogram.cardiogram }}</td>
+	</tr>
+
+	</thead>
+</table>
+</div>
+
+<div style="width:82%">
+	{{ graph_div|safe }}
+</div>
+
+{% if heartrate %}
+<div style="width:82%;  text-align: center">
+	<b>Heart rate:</b> {{ heartrate }}
+</div>
+{% endif %}
+
+<form method="get" id="back_form" action="{% url 'homepage' %}">
+	<input type="submit"  class="btn btn-secondary" value="Back">
+</form>
+
+
+{% endblock %}

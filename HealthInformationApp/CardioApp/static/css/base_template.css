@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: rgb(198,238,255);
+  background: linear-gradient(90deg, rgba(198,238,255,1) 0%, rgba(181,233,255,1) 50%, rgba(255,246,143,1) 87%, rgba(255,231,135,1) 100%);
+}
+h2 {
+  font-family:  sans-serif;
+  font-size:32px;
+}
+
+#health_title{
+  font-family: sans-serif;
+  font-size: 45px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #868686;
+}
+
+#log_out{
+  position: fixed;
+  margin-top: 30px;
+  right: 30px;
+}
+
+#lists {
+  margin-right: 210px
+}
+
+#table_nav {
+  margin: auto;
+  width: 50%;
+}
+
+#edit_form, #delete_form, #back_form, #cancel_form, #save_form, #filter_form, #find_points_form {
+  display: inline-block;
+  padding: 5px;
+  margin-right: 20px;
+}
+
+#new_element_form{
+  width: 50%;
+}
+
+
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #549ee4;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+  
+.sidebar a.active {
+  background-color: rgb(0, 92, 153);
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+
+input[type=button], input[type=submit], input[type=reset]  {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  
+}
+
+
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+#footer_not_used {
+  position: relative;
+  bottom: 2.5rem;
+  width: 80%;
+  height: 2.5rem;
+}
